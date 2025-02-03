@@ -1,0 +1,43 @@
+{
+  "name": "detect-targets",
+  "version": "0.1.0",
+  "description": "detect-targets",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "bin": {
+    "detect-targets": "cli/cli.js"
+  },
+  "files": [
+    "cli",
+    "dist",
+    "bundle",
+    "readme.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahaoboy/detect-targets.git"
+  },
+  "homepage": "https://github.com/ahaoboy/detect-targets#readme",
+  "keywords": [
+    "detect-targets"
+  ],
+  "author": "ahaoboy",
+  "license": "ISC",
+  "scripts": {
+    "bundle": "esbuild --outdir=bundle --bundle --minify --platform=node --format=cjs src/cli.ts",
+    "dev": "tsc -w -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && npm run bundle",
+    "format": "deno fmt --ignore=node_modules,dist,bundle,target --indent-width=2 --no-semicolons --single-quote",
+    "test": "vitest",
+    "test:run": "vitest --run",
+    "clear": "rm -rf node_modules dist bundle",
+    "bump": "pnpm up --latest --force",
+    "release": "pnpm publish --access public"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.2",
+    "@types/node": "^22.13.0",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.4"
+  }
+}
