@@ -1,3 +1,3 @@
-import { detectTargets } from './index'
+import { detectTargets } from "./index"
 
 console.log(detectTargets())

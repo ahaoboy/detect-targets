@@ -1,16 +1,16 @@
 {
   "name": "detect-targets",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "detect-targets",
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
+  "types": "esm/index.d.ts",
+  "main": "esm/index.js",
   "bin": {
     "detect-targets": "cli/cli.js"
   },
   "files": [
+    "esm",
+    "cjs",
     "cli",
-    "dist",
-    "bundle",
     "readme.md"
   ],
   "repository": {
@@ -23,19 +23,31 @@
   ],
   "author": "ahaoboy",
   "license": "ISC",
+  "exports": {
+    ".": {
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "default": "./cjs/index.js"
+    },
+    "./tool": {
+      "types": "./esm/tool.d.ts",
+      "import": "./esm/tool.js",
+      "require": "./cjs/tool.js",
+      "default": "./cjs/tool.js"
+    }
+  },
   "scripts": {
-    "bundle": "esbuild --outdir=bundle --bundle --minify --platform=node --format=cjs src/cli.ts",
-    "dev": "tsc -w -p tsconfig.build.json",
-    "build": "tsc -p tsconfig.build.json && npm run bundle",
-    "format": "deno fmt --ignore=node_modules,dist,bundle,target --indent-width=2 --no-semicolons --single-quote",
+    "build:cjs": "tsc --outDir cjs --declaration false --module commonjs -p tsconfig.build.json",
+    "build:esm": "tsc --outDir esm --module esnext -p tsconfig.build.json",
+    "build": "npm run build:cjs && npm run build:esm",
+    "format": "deno fmt --ignore=node_modules,dist,bundle,target --indent-width=2 --no-semicolons",
     "test": "vitest",
     "test:run": "vitest --run",
     "clear": "rm -rf node_modules dist bundle",
-    "bump": "pnpm up --latest --force",
-    "release": "pnpm publish --access public"
+    "bump": "pnpm up --latest --force"
   },
   "devDependencies": {
-    "esbuild": "^0.24.2",
     "@types/node": "^22.13.0",
     "typescript": "^5.7.3",
     "vitest": "^3.0.4"
